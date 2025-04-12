@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Browse Profiles - SkillBarter</title>
+    <style>
+      :root {
+        --linkedin-blue: #0077b5;
+        --linkedin-light: #e6f0f6;
+        --linkedin-dark: #313335;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        background-color: var(--linkedin-light);
+        color: var(--linkedin-dark);
+        overflow-x: hidden;
+      }
+
+      header {
+        background-color: var(--linkedin-blue);
+        color: white;
+        padding: 1rem;
+        text-align: center;
+      }
+
+      .filters {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        padding: 1rem;
+        background-color: white;
+        flex-wrap: wrap;
+      }
+
+      .filters select {
+        padding: 0.5rem;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+
+      .profile-strip {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #d2eaf7;
+        margin: 2rem auto;
+        padding: 2rem;
+        width: 90%;
+        max-width: 1000px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .profile-left {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      .profile-left img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .profile-details {
+        max-width: 400px;
+      }
+
+      .profile-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .btn {
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 5px;
+        background-color: var(--linkedin-blue);
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .btn:hover {
+        background-color: #005f94;
+      }
+
+      .swipe-controls {
+        display: flex;
+        justify-content: center;
+        margin-top: 1.5rem;
+        gap: 2rem;
+      }
+
+      .swipe-controls button {
+        padding: 0.6rem 1.5rem;
+        font-size: 1.1rem;
+      }
+
+      #experienceBox {
+        max-width: 90%;
+        margin: 1rem auto;
+        background-color: white;
+        border-left: 5px solid var(--linkedin-blue);
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        display: none;
+      }
+      .back-link {
+        display: block;
+        text-align: center;
+        margin: 2rem auto;
+        color: var(--linkedin-blue);
+        font-weight: bold;
+        text-decoration: none;
+        font-size: 1rem;
+      }
+
+      .back-link:hover {
+        text-decoration: underline;
+      }
+      header {
+        background-color: var(--linkedin-blue);
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: 1.5rem;
+      }
+
+      .nav-buttons a {
+        margin-left: 1rem;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        background-color: rgba(255, 255, 255, 0.1);
+        padding: 0.4rem 1rem;
+        border-radius: 5px;
+      }
+      .header-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        margin-left: 1rem;
+        cursor: pointer;
+        border: 2px solid white;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <header>
+      <h1>SkillBarter</h1>
+      <h1>Browse Profiles</h1>
+
+      <div style="display: flex; align-items: center">
+        <div class="nav-buttons">
+          <input
+            type="text"
+            placeholder="Search skills..."
+            class="header-search"
+          />
+
+          <a href="exchange-dashboard.html">Exchange Skills</a>
+          <a href="home.html">Home</a>
+          
+          
+          <a href="messages.html" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Messages</a>
+
+        </div>
+      
+      </div>
+    </header>
+      
+      
+    
+
+    <div class="filters">
+      <select id="skillFilter">
+        <option value="">Select Skill</option>
+        <option value="Technical">Technical Skills</option>
+        <option value="Non-Technical">Non-Technical Skills</option>
+      </select>
+      <select id="locationFilter">
+        <option value="">Select State</option>
+        <option>Maharashtra</option>
+        <option>Delhi</option>
+        <option>Karnataka</option>
+        <option>West Bengal</option>
+        <option>Tamil Nadu</option>
+        <option>Uttar Pradesh</option>
+      </select>
+      <select id="categoryFilter">
+        <option value="">Category</option>
+        <option>School Student</option>
+        <option>College Student</option>
+        <option>Working Professional</option>
+      </select>
+    </div>
+
+    <div id="profileContainer"></div>
+
+    <div id="experienceBox"></div>
+
+    <div class="swipe-controls">
+      <button onclick="prevProfile()">⟵ Previous</button>
+      <button onclick="nextProfile()">Next ⟶</button>
+    </div>
+
+    <script>
+      const profiles = [
+        {
+          name: "Aarav Kumar",
+          location: "Delhi",
+          skillOffer: "Python",
+          skillNeed: "Graphic Design",
+          category: "College Student",
+          experience: "Developed multiple projects using Flask and Django.",
+        },
+        {
+          name: "Priya Sharma",
+          location: "Mumbai",
+          skillOffer: "Photography",
+          skillNeed: "Web Development",
+          category: "School Student",
+          experience: "Participated in school level photography contests.",
+        },
+        {
+          name: "Rohit Verma",
+          location: "Kolkata",
+          skillOffer: "UI/UX Design",
+          skillNeed: "Python",
+          category: "Working Professional",
+          experience: "Worked with startups to design mobile apps.",
+        },
+        {
+          name: "Neha Singh",
+          location: "Bangalore",
+          skillOffer: "Java",
+          skillNeed: "Public Speaking",
+          category: "College Student",
+          experience: "Built desktop apps for academic projects.",
+        },
+        {
+          name: "Kunal Das",
+          location: "Chennai",
+          skillOffer: "Content Writing",
+          skillNeed: "Machine Learning",
+          category: "Working Professional",
+          experience: "Writes for top education platforms.",
+        },
+        {
+          name: "Simran Mehta",
+          location: "Hyderabad",
+          skillOffer: "Video Editing",
+          skillNeed: "App Development",
+          category: "College Student",
+          experience: "Edited YouTube videos for influencers.",
+        },
+        {
+          name: "Riya Kapoor",
+          location: "Pune",
+          skillOffer: "Digital Marketing",
+          skillNeed: "Python",
+          category: "College Student",
+          experience: "Managed social media campaigns.",
+        },
+        {
+          name: "Ankit Tiwari",
+          location: "Lucknow",
+          skillOffer: "Accounting",
+          skillNeed: "Graphic Design",
+          category: "Working Professional",
+          experience: "5+ years in corporate finance.",
+        },
+        {
+          name: "Meera Joshi",
+          location: "Ahmedabad",
+          skillOffer: "Cooking",
+          skillNeed: "Blog Writing",
+          category: "School Student",
+          experience: "Won multiple local cooking competitions.",
+        },
+        {
+          name: "Dev Sharma",
+          location: "Noida",
+          skillOffer: "3D Modeling",
+          skillNeed: "Web Design",
+          category: "College Student",
+          experience: "Designed game assets in Unity.",
+        },
+        {
+          name: "Tanya Desai",
+          location: "Chandigarh",
+          skillOffer: "Painting",
+          skillNeed: "Photography",
+          category: "School Student",
+          experience: "Exhibited art in school fairs.",
+        },
+        {
+          name: "Nikhil Bansal",
+          location: "Bhopal",
+          skillOffer: "JavaScript",
+          skillNeed: "UI/UX",
+          category: "College Student",
+          experience: "Built interactive front-ends.",
+        },
+        {
+          name: "Sanya Iyer",
+          location: "Mysore",
+          skillOffer: "French",
+          skillNeed: "Video Editing",
+          category: "College Student",
+          experience: "Language tutor for beginners.",
+        },
+        {
+          name: "Yashwant Rao",
+          location: "Nagpur",
+          skillOffer: "Guitar",
+          skillNeed: "Web Development",
+          category: "Working Professional",
+          experience: "Performs live shows every month.",
+        },
+        {
+          name: "Ayesha Khan",
+          location: "Jaipur",
+          skillOffer: "Poetry",
+          skillNeed: "Public Speaking",
+          category: "College Student",
+          experience: "Published poems in college magazines.",
+        },
+      ];
+
+      let currentIndex = 0;
+
+      function showProfile(index) {
+        const profile = profiles[index];
+        const profileHTML = `
+        <div class="profile-strip">
+          <div class="profile-left">
+            <img src="https://randomuser.me/api/portraits/${
+              index % 2 === 0 ? "men" : "women"
+            }/${index + 10}.jpg" alt="${profile.name}" />
+            <div class="profile-details">
+              <h2>${profile.name}</h2>
+              <p><strong>Location:</strong> ${profile.location}</p>
+              <p><strong>Offers:</strong> ${profile.skillOffer}</p>
+              <p><strong>Wants:</strong> ${profile.skillNeed}</p>
+              <p><strong>Category:</strong> ${profile.category}</p>
+            </div>
+          </div>
+          <div class="profile-buttons">
+            <button class="btn" onclick="showExperience('${
+              profile.experience
+            }')">i</button>
+            <button class="btn" onclick="follow(this, '${
+              profile.name
+            }')">Connect</button>
+            <button class="btn" onclick="alert('Messaging ${
+              profile.name
+            }')">Message</button>
+          </div>
+        </div>
+      `;
+        document.getElementById("profileContainer").innerHTML = profileHTML;
+        document.getElementById("experienceBox").style.display = "none";
+      }
+
+      function follow(btn, name) {
+        btn.textContent = "Following";
+        btn.disabled = true;
+        const connections =
+          JSON.parse(localStorage.getItem("connections")) || [];
+        if (!connections.includes(name)) {
+          connections.push(name);
+          localStorage.setItem("connections", JSON.stringify(connections));
+        }
+      }
+
+      function showExperience(text) {
+        const box = document.getElementById("experienceBox");
+        box.innerText = text;
+        box.style.display = "block";
+      }
+
+      function prevProfile() {
+        currentIndex =
+          currentIndex === 0 ? profiles.length - 1 : currentIndex - 1;
+        showProfile(currentIndex);
+      }
+
+      function nextProfile() {
+        currentIndex = (currentIndex + 1) % profiles.length;
+        showProfile(currentIndex);
+      }
+
+      showProfile(currentIndex);
+    </script>
+    <a href="home.html" class="back-link">← Back to Home</a>
+  </body>
+</html>

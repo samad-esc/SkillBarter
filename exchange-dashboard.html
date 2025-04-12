@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Skill Exchange Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- HEADER -->
+  <header class="bg-white shadow p-4 flex justify-between items-center">
+    <div class="flex items-center gap-4">
+      <a href="javascript:history.back()" class="text-blue-600 hover:underline text-sm">← Back</a>
+      <a href="home.html" class="text-blue-600 hover:underline text-sm">🏠 Home</a>
+      <h1 class="text-xl font-bold ml-4">SkillBarter Dashboard</h1>
+    </div>
+    <div class="relative">
+      <button id="notificationBtn" class="relative focus:outline-none">
+        <svg class="w-6 h-6 text-gray-700 hover:text-blue-600" fill="none" stroke="currentColor" stroke-width="2"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V4a2 2 0 10-4 0v1.341A6.002 6.002 0 006 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+        </svg>
+        <span id="notificationCount"
+          class="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-white bg-red-600 rounded-full hidden">0</span>
+      </button>
+      <div id="notificationDropdown"
+        class="absolute right-0 mt-2 w-72 bg-white border border-gray-200 rounded shadow-lg hidden z-50">
+        <div class="p-4 font-semibold border-b border-gray-100">Notifications</div>
+        <ul id="notificationList" class="max-h-60 overflow-y-auto text-sm"></ul>
+      </div>
+    </div>
+  </header>
+
+  <main class="p-6 max-w-5xl mx-auto space-y-10">
+    <!-- DASHBOARD STATS -->
+    <div id="dashboardStats" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+
+    <!-- UPCOMING SESSIONS -->
+    <section>
+      <h2 class="text-lg font-semibold mb-3">📅 Upcoming Sessions</h2>
+      <ul id="upcomingSessions" class="bg-white p-4 rounded shadow space-y-2 text-sm text-gray-700"></ul>
+    </section>
+
+    <!-- PROPOSALS LIST -->
+    <section>
+      <h2 class="text-lg font-semibold mb-3">Your Skill Exchange Proposals</h2>
+      <div id="proposalsList" class="space-y-4"></div>
+    </section>
+
+    <!-- NEW PROPOSAL FORM -->
+    <section>
+      <h2 class="text-lg font-semibold mb-3">Propose a New Exchange</h2>
+      <form id="proposalForm" class="bg-white p-4 rounded shadow space-y-3">
+        <input type="text" id="skillOffer" placeholder="Skill you offer" required class="w-full p-2 border rounded" />
+        <input type="text" id="skillRequest" placeholder="Skill you want" required class="w-full p-2 border rounded" />
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Submit Proposal</button>
+      </form>
+    </section>
+
+    <!-- TOP SKILLS -->
+    <section>
+      <h2 class="text-lg font-semibold mb-3">🔥 Top Skill Categories</h2>
+      <div class="flex flex-wrap gap-2 text-sm">
+        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">Web Development</span>
+        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full">Graphic Design</span>
+        <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full">Data Analysis</span>
+        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full">Video Editing</span>
+        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full">Public Speaking</span>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section>
+      <h2 class="text-lg font-semibold mb-3">✨ How SkillBarter Works</h2>
+      <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+        <li>Offer a skill you're confident in.</li>
+        <li>Browse or receive matching proposals.</li>
+        <li>Propose or accept an exchange.</li>
+        <li>Schedule your session directly from the dashboard.</li>
+        <li>Grow your skillset while helping others grow too!</li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- SCHEDULER MODAL -->
+  <div id="scheduleModal" class="fixed inset-0 bg-black bg-opacity-30 hidden flex justify-center items-center z-50">
+    <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm">
+      <h2 class="text-lg font-semibold mb-4">Schedule Skill Session</h2>
+      <input type="datetime-local" id="sessionDate" class="w-full border rounded p-2 mb-4" />
+      <div class="flex justify-end gap-2">
+        <button onclick="closeModal()" class="text-gray-600">Cancel</button>
+        <button onclick="saveSession()" class="bg-blue-600 text-white px-4 py-1 rounded">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT -->
+  <script>
+    // script remains unchanged
+  </script>
+</body>
+</html>
