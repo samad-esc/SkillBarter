@@ -1,250 +1,323 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Profile - SkillBarter</title>
-    <style>
-      :root {
-        --linkedin-blue: #0077b5;
-        --linkedin-light: #f3f2ef;
-        --linkedin-dark: #313335;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Profile - SkillBarter</title>
+  <style>
+    :root {
+      --linkedin-blue: #0077b5;
+      --linkedin-light: #f3f2ef;
+      --linkedin-dark: #313335;
+    }
 
-      body {
-        margin: 0;
-        font-family: "Segoe UI", sans-serif;
-        background-color: var(--linkedin-light);
-        color: var(--linkedin-dark);
-      }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background-color: var(--linkedin-light);
+      color: var(--linkedin-dark);
+    }
 
-      header nav {
-        
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: var(--linkedin-blue);
-        color: white;
-        padding: 1rem;
-      }
+    header nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--linkedin-blue);
+      color: white;
+      padding: 1rem 2rem;
+      flex-wrap: wrap;
+    }
 
-      header nav a {
-        color: white;
-        text-decoration: none;
-        font-weight: bold;
-        margin-left: 1rem;
-      }
+    header nav .breadcrumb {
+      display: flex;
+      align-items: center;
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
 
-      .profile-container {
-        max-width: 800px;
-        margin: 2rem auto;
-        padding: 2rem;
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      }
+    header nav .breadcrumb a {
+      color: white;
+      text-decoration: none;
+    }
 
-      .profile-header {
-        display: flex;
-        align-items: center;
-        gap: 1.5rem;
-        margin-bottom: 1rem;
-      }
+    header nav .breadcrumb span {
+      margin: 0 0.5rem;
+      font-weight: normal;
+      font-size: 1rem;
+    }
 
-      .profile-header img {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        object-fit: cover;
-      }
+    header nav .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      margin-left: 1rem;
+    }
 
-      .profile-info h2 {
-        margin: 0;
-        font-size: 1.8rem;
-      }
+    .profile-container {
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 2rem;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
 
-      .profile-info p {
-        margin: 4px 0;
-        font-size: 1rem;
-      }
+    .profile-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
 
-      .badge {
-        background-color: var(--linkedin-blue);
-        color: white;
-        padding: 0.3rem 0.6rem;
-        border-radius: 5px;
-        font-size: 0.8rem;
-        display: inline-block;
-        margin: 2px;
-      }
+    .profile-left {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
 
-      .skills,
-      .activity {
-        margin-top: 1.5rem;
-      }
+    .profile-header img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #0077b5;
+    }
 
-      .skills span {
-        display: inline-block;
-        background-color: #e1ecf4;
-        color: #0077b5;
-        padding: 0.4rem 0.6rem;
-        border-radius: 20px;
-        margin: 5px;
-        font-size: 0.9rem;
-      }
+    .profile-info h2 {
+      margin: 0;
+      font-size: 2rem;
+      color: var(--linkedin-dark);
+    }
 
-      .activity ul {
-        list-style: disc;
-        margin-left: 2rem;
-      }
+    .profile-info p {
+      margin: 4px 0;
+      font-size: 1rem;
+      color: #555;
+    }
 
-      .edit-btn {
-        margin-left: auto;
-        padding: 0.5rem 1rem;
-        background-color: #0077b5;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
+    .edit-btn {
+      padding: 0.5rem 1rem;
+      background-color: #0077b5;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      align-self: flex-start;
+    }
 
-      .edit-section {
-        display: none;
-        margin-top: 1rem;
-      }
+    .badge {
+      background-color: var(--linkedin-blue);
+      color: white;
+      padding: 0.3rem 0.6rem;
+      border-radius: 5px;
+      font-size: 0.8rem;
+      margin: 2px;
+      display: inline-block;
+    }
 
-      .edit-section input,
-      .edit-section textarea {
-        display: block;
-        width: 100%;
-        padding: 0.5rem;
-        margin: 0.5rem 0;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-      }
+    .section {
+      margin-top: 2rem;
+    }
 
-      .save-btn {
-        background-color: #0077b5;
-        color: white;
-        padding: 0.5rem 1rem;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-    </style>
-  </head>
-  <body>
-    <header>
-      <nav>
-        <div style="font-size: 1.2rem; font-weight: bold">SkillBarter</div>
-        <div>
-          <a href="exchange-dashboard.html">Exchange Skills</a>
-          <a href="message.html">Messages</a>
-          <a href="home.html">Home</a>
-          <a href="index.html">Browse Profiles</a>
-          <a href="my-profile.html">My Profile</a>
-        </div>
-      </nav>
-    </header>
+    .section h3 {
+      color: #0077b5;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
 
-    <div class="profile-container">
-      <div class="profile-header">
-        <img
-          src="https://randomuser.me/api/portraits/men/45.jpg"
-          alt="Profile Picture"
-        />
+    .skill-list,
+    .activity ul,
+    .certification-list {
+      list-style: disc;
+      padding-left: 1.5rem;
+      color: #444;
+    }
+
+    .skills span {
+      display: inline-block;
+      background-color: #e1ecf4;
+      color: #0077b5;
+      padding: 0.4rem 0.6rem;
+      border-radius: 20px;
+      margin: 5px 8px 5px 0;
+      font-size: 0.9rem;
+    }
+
+    .endorse-count {
+      background-color: #d0eaff;
+      color: #0077b5;
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      margin-left: 0.5rem;
+    }
+
+    .endorse-btn {
+      margin-left: 0.5rem;
+      background-color: #0077b5;
+      color: white;
+      border: none;
+      padding: 0.3rem 0.6rem;
+      font-size: 0.8rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .endorse-btn:hover {
+      background-color: #005983;
+    }
+
+    .edit-section {
+      display: none;
+      margin-top: 2rem;
+    }
+
+    .edit-section input,
+    .edit-section textarea {
+      width: 100%;
+      padding: 0.7rem;
+      margin-bottom: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    .save-btn {
+      background-color: #0077b5;
+      color: white;
+      padding: 0.5rem 1.2rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .stat-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="breadcrumb">
+        <a href="home.html">SkillBarter</a>
+        <span>&gt;</span>
+        <span>My Profile</span>
+      </div>
+      <div class="nav-links">
+        <a href="home.html">Home</a>
+        <a href="index.html">Browse Profiles</a>
+        <a href="exchange-dashboard.html">Exchange Skills</a>
+        <a href="message.html">Messages</a>
+        <a href="my-profile.html">My Profile</a>
+      </div>
+    </nav>
+  </header>
+
+  <div class="profile-container">
+    <div class="profile-header">
+      <div class="profile-left">
+        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Profile Picture" />
         <div class="profile-info">
           <h2 id="displayName">Aman Raj</h2>
+          <p><strong>Headline:</strong> Aspiring Developer | Python & AI Enthusiast</p>
           <p><strong>Location:</strong> Delhi</p>
           <p><strong>Category:</strong> College Student</p>
-          <p><strong>Offers:</strong> Web Development</p>
           <p><strong>Wants:</strong> Content Writing</p>
           <div>
             <span class="badge">Verified</span>
             <span class="badge">Active</span>
           </div>
+          <div class="stat-bar">
+            <div>👥 Connections: 14</div>
+            <div>💬 Messages: 8</div>
+            <div>⭐ Endorsements: 23</div>
+          </div>
+          <p><strong>Status:</strong> ✅ Available for exchange</p>
+          <p><strong>Portfolio:</strong> <a href="https://github.com/amanraj" target="_blank">github.com/amanraj</a></p>
         </div>
-        <button class="edit-btn" onclick="toggleEdit()">Edit Profile</button>
       </div>
-
-      <div class="skills">
-        <h3>Skills</h3>
-        <span>HTML</span>
-        <span>CSS</span>
-        <span>JavaScript</span>
-        <span>React</span>
-      </div>
-
-      <div class="activity">
-        <h3>Recent Activity</h3>
-        <ul>
-          <li>Connected with Priya Sharma</li>
-          <li>Messaged Rohit Verma</li>
-          <li>Followed Simran Mehta</li>
-        </ul>
-      </div>
-
-      <div class="edit-section" id="editSection">
-        <h3>Edit Profile</h3>
-        <input type="text" id="editName" placeholder="Enter new name" />
-        <textarea
-          id="editSkills"
-          placeholder="Update skills (comma separated)"
-        ></textarea>
-        <button class="save-btn" onclick="saveProfile()">Save Changes</button>
-      </div>
+      <button class="edit-btn" onclick="toggleEdit()">Edit Profile</button>
     </div>
 
-    <script>
-      window.addEventListener("DOMContentLoaded", () => {
-        const profile = JSON.parse(localStorage.getItem("myProfile"));
+    <div class="section">
+      <h3>Skills You Offer:</h3>
+      <ul class="skill-list">
+        <li>Python <span class="endorse-count">+14</span> <button class="endorse-btn">Endorse</button></li>
+        <li>Flask <span class="endorse-count">+9</span> <button class="endorse-btn">Endorse</button></li>
+      </ul>
+    </div>
 
-        if (profile) {
-          document.getElementById("profileName").textContent = profile.name;
-          document.getElementById("profileProfession").textContent =
-            profile.profession;
-          document.getElementById("profileLocation").textContent =
-            profile.location;
-          document.getElementById("profileSkillOffer").textContent =
-            profile.skillOffer;
-          document.getElementById("profileSkillNeed").textContent =
-            profile.skillNeed;
-          document.getElementById("profileCategory").textContent =
-            profile.category;
-          document.getElementById("profileExperience").textContent =
-            profile.experience;
-          document.getElementById("profileImage").src =
-            profile.image || "https://via.placeholder.com/100";
-        }
-      });
+    <div class="skills section">
+      <h3>Other Skills</h3>
+      <span>HTML</span>
+      <span>CSS</span>
+      <span>JavaScript</span>
+      <span>React</span>
+    </div>
 
-      function toggleEdit() {
-        const section = document.getElementById("editSection");
-        section.style.display =
-          section.style.display === "block" ? "none" : "block";
+    <div class="section">
+      <h3>Certifications & Achievements</h3>
+      <ul class="certification-list">
+        <li>Python for Everybody – Coursera (2024)</li>
+        <li>Web Development Bootcamp – Udemy (2023)</li>
+      </ul>
+    </div>
+
+    <div class="activity section">
+      <h3>Recent Activity</h3>
+      <ul>
+        <li>Connected with Priya Sharma</li>
+        <li>Messaged Rohit Verma</li>
+        <li>Followed Simran Mehta</li>
+      </ul>
+    </div>
+
+    <div class="edit-section" id="editSection">
+      <h3>Edit Profile</h3>
+      <input type="text" id="editName" placeholder="Enter new name" />
+      <textarea id="editSkills" placeholder="Update skills (comma separated)"></textarea>
+      <button class="save-btn" onclick="saveProfile()">Save Changes</button>
+    </div>
+  </div>
+
+  <script>
+    function toggleEdit() {
+      const section = document.getElementById("editSection");
+      section.style.display = section.style.display === "block" ? "none" : "block";
+    }
+
+    function saveProfile() {
+      const newName = document.getElementById("editName").value;
+      const newSkills = document.getElementById("editSkills").value;
+
+      if (newName) {
+        document.getElementById("displayName").textContent = newName;
       }
 
-      function saveProfile() {
-        const newName = document.getElementById("editName").value;
-        const newSkills = document.getElementById("editSkills").value;
-
-        if (newName) {
-          document.getElementById("displayName").textContent = newName;
-        }
-
-        if (newSkills) {
-          const skills = newSkills.split(",").map((skill) => skill.trim());
-          const skillsContainer = document.querySelector(".skills");
-          skillsContainer.innerHTML = "<h3>Skills</h3>";
-          skills.forEach((skill) => {
-            const span = document.createElement("span");
-            span.textContent = skill;
-            skillsContainer.appendChild(span);
-          });
-        }
-
-        toggleEdit();
+      if (newSkills) {
+        const skills = newSkills.split(",").map(skill => skill.trim());
+        const skillsContainer = document.querySelector(".skills");
+        skillsContainer.innerHTML = "<h3>Other Skills</h3>";
+        skills.forEach(skill => {
+          const span = document.createElement("span");
+          span.textContent = skill;
+          skillsContainer.appendChild(span);
+        });
       }
-    </script>
-  </body>
+
+      toggleEdit();
+    }
+  </script>
+</body>
 </html>
