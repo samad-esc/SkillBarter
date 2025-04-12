@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Explore Skills - SkillBarter</title>
+  <style>
+    :root {
+      --linkedin-blue: #0077b5;
+      --light-bg: #f3f4f6;
+      --white: #ffffff;
+      --text-dark: #333;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--light-bg);
+      color: var(--text-dark);
+    }
+
+    header {
+      background: var(--linkedin-blue);
+      padding: 1rem 2rem;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+    }
+
+    .nav-links a {
+      color: white;
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .explore-container {
+      padding: 2rem;
+    }
+
+    .filters {
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .filters input,
+    .filters select {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .filters label {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.9rem;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .profile-card {
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .profile-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .profile-card img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 0.5rem;
+    }
+
+    .skill-tags {
+      margin: 0.5rem 0;
+    }
+
+    .skill-tags span {
+      display: inline-block;
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 0.2rem 0.5rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      margin: 0.2rem;
+    }
+
+    .profile-card button {
+      background: var(--linkedin-blue);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Explore Skills</h1>
+    <div class="nav-links">
+      <a href="home.html">Home</a>
+      <a href="my-profile.html">My Profile</a>
+      <a href="add-profile.html">Add Profile</a>
+    </div>
+  </header>
+
+  <div class="explore-container">
+
+    <div class="filters">
+      <label>
+        Skill:
+        <input type="text" id="skillFilter" placeholder="e.g. Python" />
+      </label>
+      <label>
+        Category:
+        <select id="categoryFilter">
+          <option value="">All</option>
+          <option value="Coding">Coding</option>
+          <option value="Design">Design</option>
+          <option value="Public Speaking">Public Speaking</option>
+          <option value="Content">Content Writing</option>
+        </select>
+      </label>
+      <label>
+        Location:
+        <input type="text" id="locationFilter" placeholder="City or College" />
+      </label>
+      <label>
+        Available Now:
+        <input type="checkbox" id="availabilityFilter" />
+      </label>
+    </div>
+
+    <div class="profile-grid" id="profileGrid">
+      <!-- Profiles will be loaded here -->
+    </div>
+
+  </div>
+
+  <script>
+    const profiles = [
+      {
+        name: "Aarav Kumar",
+        image: "https://randomuser.me/api/portraits/men/11.jpg",
+        location: "Delhi",
+        skills: ["Python", "Flask", "Django"],
+        category: "Coding",
+        available: true
+      },
+      {
+        name: "Priya Sharma",
+        image: "https://randomuser.me/api/portraits/women/22.jpg",
+        location: "Mumbai",
+        skills: ["Photography", "Lightroom"],
+        category: "Design",
+        available: false
+      },
+      {
+        name: "Neha Singh",
+        image: "https://randomuser.me/api/portraits/women/44.jpg",
+        location: "Bangalore",
+        skills: ["Java", "OOP"],
+        category: "Coding",
+        available: true
+      },
+      {
+        name: "Simran Mehta",
+        image: "https://randomuser.me/api/portraits/women/36.jpg",
+        location: "Pune",
+        skills: ["Video Editing", "CapCut"],
+        category: "Content",
+        available: true
+      },
+    ];
+
+    function renderProfiles(filterSkill = "", filterCategory = "", filterLocation = "", filterAvailable = false) {
+      const container = document.getElementById("profileGrid");
+      container.innerHTML = "";
+
+      const filtered = profiles.filter(profile => {
+        const matchSkill = !filterSkill || profile.skills.some(s => s.toLowerCase().includes(filterSkill.toLowerCase()));
+        const matchCategory = !filterCategory || profile.category === filterCategory;
+        const matchLocation = !filterLocation || profile.location.toLowerCase().includes(filterLocation.toLowerCase());
+        const matchAvailable = !filterAvailable || profile.available;
+
+        return matchSkill && matchCategory && matchLocation && matchAvailable;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = "<p>No profiles match your filters.</p>";
+        return;
+      }
+
+      filtered.forEach(profile => {
+        const card = document.createElement("div");
+        card.className = "profile-card";
+        card.innerHTML = `
+          <img src="${profile.image}" alt="${profile.name}" />
+          <h3>${profile.name}</h3>
+          <p><strong>Location:</strong> ${profile.location}</p>
+          <div class="skill-tags">${profile.skills.map(s => `<span>${s}</span>`).join('')}</div>
+          <button>View Profile</button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Event listeners for filters
+    document.getElementById("skillFilter").addEventListener("input", applyFilters);
+    document.getElementById("categoryFilter").addEventListener("change", applyFilters);
+    document.getElementById("locationFilter").addEventListener("input", applyFilters);
+    document.getElementById("availabilityFilter").addEventListener("change", applyFilters);
+
+    function applyFilters() {
+      const skill = document.getElementById("skillFilter").value;
+      const category = document.getElementById("categoryFilter").value;
+      const location = document.getElementById("locationFilter").value;
+      const available = document.getElementById("availabilityFilter").checked;
+
+      renderProfiles(skill, category, location, available);
+    }
+
+    // Initial load
+    renderProfiles();
+  </script>
+</body>
+</html>
